@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="description" content="Some Memories Stay — a quiet digital archive of time, reflection, and moving forward." />
+  <title>Some Memories Stay — An Archive of Time</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="is-loading">
+  <div class="preloader" aria-hidden="true">
+    <div class="preloader-mark"><i></i><i></i><i></i></div>
+    <span>Gathering the light</span>
+  </div>
+
+  <canvas id="starfield" aria-hidden="true"></canvas>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="ambient ambient-one" aria-hidden="true"></div>
+  <div class="ambient ambient-two" aria-hidden="true"></div>
+  <div class="scroll-progress" aria-hidden="true"><span></span></div>
+  <div class="cursor-glow" aria-hidden="true"></div>
+
+  <header class="site-header" data-header>
+    <a href="#home" class="wordmark magnetic" aria-label="Some Memories Stay, home">
+      <span class="wordmark-orbit"><i></i></span>
+      <span>SMS</span>
+    </a>
+    <nav class="desktop-nav" aria-label="Primary navigation">
+      <a href="#beginning">Beginning</a>
+      <a href="#archive">Archive</a>
+      <a href="#numbers">Numbers</a>
+    </nav>
+    <div class="header-actions">
+      <button class="sound-toggle magnetic" type="button" aria-label="Toggle ambient motion" aria-pressed="false" data-sound-toggle>
+        <span class="sound-bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <span class="sound-label">Ambient</span>
+      </button>
+      <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" data-menu-toggle>
+        <span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <aside class="ambient-player glass-card" data-ambient-player aria-hidden="true">
+    <div class="ambient-player-head"><span class="live-dot"><i></i> Listening room</span><button type="button" aria-label="Close ambient player" data-ambient-close>×</button></div>
+    <div class="ambient-track"><div class="ambient-art"><i></i></div><div><small>AMBIENT / 01</small><strong>Room without hurry</strong><span>Slow Bloom · 04:07</span></div></div>
+    <div class="ambient-player-bottom"><button type="button" class="ambient-play" data-ambient-play aria-label="Pause ambient player" aria-pressed="true"><i></i><i></i></button><div class="ambient-progress"><span></span></div><time>00:14</time></div>
+  </aside>
+
+  <aside class="mobile-menu" data-mobile-menu aria-hidden="true">
+    <div class="mobile-menu-top"><span>Index / 10</span><button type="button" data-menu-close aria-label="Close menu">×</button></div>
+    <a href="#beginning"><small>01</small>The Beginning</a>
+    <a href="#between"><small>02</small>The Time Between</a>
+    <a href="#little-things"><small>03</small>The Little Things</a>
+    <a href="#unsaid"><small>04</small>The Unsaid</a>
+    <a href="#distance"><small>05</small>The Distance</a>
+    <a href="#lessons"><small>06</small>The Lessons</a>
+    <a href="#archive"><small>07</small>The Archive</a>
+    <a href="#letter"><small>08</small>A Letter Never Sent</a>
+    <a href="#numbers"><small>09</small>The Numbers</a>
+    <a href="#final"><small>10</small>The Final Page</a>
+    <p>Slowly, and without needing to explain itself.</p>
+  </aside>
+
+  <main>
+    <section id="home" class="hero chapter-shell" data-section="home">
+      <div class="hero-constellation constellation-a" aria-hidden="true"><span></span><span></span><span></span></div>
+      <div class="hero-constellation constellation-b" aria-hidden="true"><span></span><span></span></div>
+      <div class="side-index hero-index" aria-hidden="true"><span>00</span><i></i><span>∞</span></div>
+      <div class="hero-topline reveal-up">
+        <span class="eyebrow"><b></b> A private archive of becoming</span>
+        <span class="issue">17 / 08 / 25 — ∞</span>
+      </div>
+      <div class="hero-center">
+        <p class="hero-kicker reveal-up">There are places that time cannot quite reach.</p>
+        <h1 class="hero-title" aria-label="Some Memories Stay">
+          <span class="line reveal-up delay-1">Some</span>
+          <span class="line serif reveal-up delay-2">Memories</span>
+          <span class="line reveal-up delay-3">Stay<span class="period">.</span></span>
+        </h1>
+        <div class="hero-copy reveal-up delay-4">
+          <p>Not every story gets an ending.<br />Some simply become a part of who we are.</p>
+        </div>
+      </div>
+      <article class="time-card glass-card reveal-up delay-5" aria-label="Live time since 17 August 2025, 11:09 AM">
+        <div class="card-topline">
+          <span class="live-dot"><i></i> Live since</span>
+          <time datetime="2025-08-17T11:09:00+05:30">17 Aug 2025 · 11:09 AM</time>
+        </div>
+        <div class="timer-grid timer-grid--hero" data-timer="hero">
+          <div><strong data-time="days">000</strong><span>days</span></div>
+          <div><strong data-time="hours">00</strong><span>hours</span></div>
+          <div><strong data-time="minutes">00</strong><span>minutes</span></div>
+          <div><strong data-time="seconds">00</strong><span>seconds</span></div>
+        </div>
+        <div class="card-footer"><span>The time between then and now</span><span class="pulse-line"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></div>
+      </article>
+      <a href="#beginning" class="scroll-cue magnetic reveal-up delay-6" aria-label="Begin the archive">
+        <span class="scroll-ring"><i></i></span>
+        <span>Begin slowly</span>
+      </a>
+      <p class="hero-edge-note" aria-hidden="true">SCROLL TO OBSERVE</p>
+    </section>
+
+    <section id="beginning" class="chapter chapter-beginning chapter-shell" data-section="beginning">
+      <div class="section-grid-lines" aria-hidden="true"></div>
+      <div class="side-index"><span>01</span><i></i><span>THE FIRST LIGHT</span></div>
+      <div class="chapter-intro beginning-copy">
+        <span class="eyebrow reveal"><b></b> Chapter one</span>
+        <p class="chapter-number reveal">01</p>
+        <h2 class="display-xl reveal">The<br /><em>Beginning</em></h2>
+        <p class="body-xl reveal">Before anything had to mean more than it did. A moment entered quietly, and made room for itself.</p>
+        <a href="#between" class="text-link reveal">Continue <span>↘</span></a>
+      </div>
+      <div class="beginning-visual reveal-scale" data-parallax="0.07">
+        <div class="visual-frame">
+          <img src="assets/archive-window.jpg" alt="Rain against a window with a distant quiet light" />
+          <div class="frame-lens" aria-hidden="true"></div>
+          <div class="frame-caption"><span>Untitled still</span><span>01:17 / no date required</span></div>
+        </div>
+        <div class="orbital-note glass-card"><span class="mini-orbit"></span><p>Some things begin<br />before we name them.</p></div>
+      </div>
+      <p class="margin-note beginning-note reveal">Not a beginning to hold onto.<br />Just one to honor.</p>
+    </section>
+
+    <section id="between" class="chapter chapter-between chapter-shell" data-section="between">
+      <div class="side-index"><span>02</span><i></i><span>SEASONS IN MOTION</span></div>
+      <div class="between-backdrop" data-parallax="-0.06" aria-hidden="true">
+        <div class="horizon-line"></div><div class="horizon-line"></div><div class="horizon-line"></div>
+      </div>
+      <div class="between-heading">
+        <span class="eyebrow reveal"><b></b> Chapter two</span>
+        <h2 class="display-xxl reveal">The Time<br /><em>Between</em></h2>
+      </div>
+      <div class="between-sequence" aria-label="A sequence of ordinary moments">
+        <article class="sequence-item reveal"><span class="sequence-no">I</span><p>Days that arrived<br />without asking anything.</p><i></i></article>
+        <article class="sequence-item reveal delay-1"><span class="sequence-no">II</span><p>Small weather.<br />Long conversations.</p><i></i></article>
+        <article class="sequence-item reveal delay-2"><span class="sequence-no">III</span><p>Silences that began<br />to have a shape.</p><i></i></article>
+      </div>
+      <p class="between-closing reveal">The middle was never empty. It was where everything learned how to change.</p>
+      <div class="orbiting-year" aria-hidden="true"><span>2025</span><i></i><span>2026</span></div>
+    </section>
+
+    <section class="every-second chapter-shell" id="every-second" data-section="seconds">
+      <canvas id="apology-canvas" aria-hidden="true"></canvas>
+      <div class="side-index side-index--light"><span>∞</span><i></i><span>THE QUIET COUNT</span></div>
+      <div class="seconds-content">
+        <span class="eyebrow eyebrow--center reveal"><b></b> A living measure</span>
+        <h2 class="display-xl center reveal">Every <em>Second</em></h2>
+        <p class="body-xl center reveal">Every second carried another “I’m sorry.”</p>
+        <div class="apology-counter glass-card reveal-scale">
+          <div class="apology-label"><span>I’m sorry</span><i>×</i><span class="counter-live">LIVE COUNT <b></b></span></div>
+          <strong id="sorry-count">00,000,000</strong>
+          <p>Not a debt. Just a record of every breath taken on the way through.</p>
+        </div>
+      </div>
+      <div class="sorry-swarm" aria-hidden="true" data-sorry-swarm></div>
+      <p class="seconds-bottom-note reveal">Older words soften. Some become light. Some simply leave.</p>
+    </section>
+
+    <section id="little-things" class="chapter chapter-little chapter-shell" data-section="little-things">
+      <div class="side-index"><span>03</span><i></i><span>ORDINARY, ON PURPOSE</span></div>
+      <div class="little-top">
+        <div>
+          <span class="eyebrow reveal"><b></b> Chapter three</span>
+          <h2 class="display-xl reveal">The Little<br /><em>Things</em></h2>
+        </div>
+        <p class="body-lg reveal">The evidence was never spectacular. It sat inside half-finished sentences, favorite corners, and songs left playing too long.</p>
+      </div>
+      <div class="little-grid">
+        <article class="memory-tile tile-a reveal-scale" tabindex="0">
+          <div class="tile-image image-desk"></div>
+          <div class="tile-overlay"></div>
+          <div class="tile-content"><span>01 / found</span><h3>Notes in the<br />margin</h3><p>A thought that didn’t need fixing.</p></div>
+          <button aria-label="View Notes in the margin" class="round-arrow">↗</button>
+        </article>
+        <article class="memory-tile tile-b reveal-scale delay-1" tabindex="0">
+          <div class="tile-image image-horizon"></div>
+          <div class="tile-overlay"></div>
+          <div class="tile-content"><span>02 / kept</span><h3>Blue hour<br />again</h3><p>One window, many versions of evening.</p></div>
+          <button aria-label="View Blue hour again" class="round-arrow">↗</button>
+        </article>
+        <article class="memory-tile tile-c reveal-scale delay-2" tabindex="0">
+          <div class="tile-image image-sky"></div>
+          <div class="tile-overlay"></div>
+          <div class="tile-content"><span>03 / almost</span><h3>The long way<br />home</h3><p>Nothing happened. That was enough.</p></div>
+          <button aria-label="View The long way home" class="round-arrow">↗</button>
+        </article>
+      </div>
+      <div class="little-bottom-line reveal"><span></span><p>We remember what helped us feel present.</p></div>
+    </section>
+
+    <section id="unsaid" class="chapter chapter-unsaid chapter-shell" data-section="unsaid">
+      <div class="side-index"><span>04</span><i></i><span>WHAT REMAINED QUIET</span></div>
+      <div class="unsaid-quote-wrap">
+        <span class="eyebrow reveal"><b></b> Chapter four</span>
+        <div class="quote-mark reveal">“</div>
+        <blockquote class="reveal">The things I never said<br />did not disappear.<br /><em>They became quieter.</em></blockquote>
+        <p class="quote-attribution reveal">— a note without an address</p>
+      </div>
+      <div class="voice-note glass-card reveal-scale" data-voice-note>
+        <div class="voice-meta"><span class="voice-icon"><i></i><i></i><i></i></span><div><strong>Unsent recording</strong><small>00:42 · captured, never played</small></div></div>
+        <button type="button" class="voice-play" aria-label="Play visual voice note" aria-pressed="false"><span></span></button>
+        <div class="waveform" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      </div>
+      <p class="unsaid-side-note reveal">Some understanding has no need<br />to become a conversation.</p>
+      <div class="unsaid-orb" aria-hidden="true"></div>
+    </section>
+
+    <section id="distance" class="chapter chapter-distance chapter-shell" data-section="distance">
+      <div class="side-index"><span>05</span><i></i><span>SPACE AS A TEACHER</span></div>
+      <span class="eyebrow eyebrow--center reveal"><b></b> Chapter five</span>
+      <h2 class="distance-title reveal">The <em>Distance</em></h2>
+      <p class="distance-copy reveal">It was not measured in miles. It was measured in the room that finally appeared between a thought and a reaction.</p>
+      <div class="distance-line reveal" data-parallax="0.03"><span class="line-start">then</span><div><i></i></div><span class="line-end">now</span></div>
+      <div class="distance-annotation annotation-a reveal"><span>01</span><p>Space made<br />the edges visible.</p></div>
+      <div class="distance-annotation annotation-b reveal"><span>02</span><p>Visible things<br />can be held lightly.</p></div>
+      <div class="distance-dial glass-card reveal-scale">
+        <div class="dial-face"><span></span><i></i><b></b></div>
+        <p>Perspective<br /><strong>changes scale.</strong></p>
+      </div>
+    </section>
+
+    <section id="lessons" class="chapter chapter-lessons chapter-shell" data-section="lessons">
+      <div class="side-index"><span>06</span><i></i><span>WHAT CAME FORWARD</span></div>
+      <div class="lessons-heading">
+        <span class="eyebrow reveal"><b></b> Chapter six</span>
+        <h2 class="display-xl reveal">The <em>Lessons</em></h2>
+        <p class="body-lg reveal">Not conclusions. More like small compass points, collected after the weather passed.</p>
+      </div>
+      <div class="lesson-list">
+        <article class="lesson-card reveal" data-tilt>
+          <span class="lesson-index">01</span><div><h3>Let a thing be<br />what it was.</h3><p>Without revising it into something easier to carry.</p></div><span class="lesson-symbol">↗</span>
+        </article>
+        <article class="lesson-card reveal delay-1" data-tilt>
+          <span class="lesson-index">02</span><div><h3>Make room for<br />the unexplainable.</h3><p>Not every feeling needs a defense or a verdict.</p></div><span class="lesson-symbol">↗</span>
+        </article>
+        <article class="lesson-card reveal delay-2" data-tilt>
+          <span class="lesson-index">03</span><div><h3>Moving on is not<br />moving away.</h3><p>It is allowing the future to have its own voice.</p></div><span class="lesson-symbol">↗</span>
+        </article>
+      </div>
+      <p class="lessons-footnote reveal">The goal was never to forget.<br />Only to meet the memory without losing the present.</p>
+    </section>
+
+    <section id="archive" class="chapter chapter-archive chapter-shell" data-section="archive">
+      <div class="side-index"><span>07</span><i></i><span>SELECTED FRAGMENTS</span></div>
+      <div class="archive-header">
+        <div>
+          <span class="eyebrow reveal"><b></b> Chapter seven</span>
+          <h2 class="display-xl reveal">The <em>Archive</em></h2>
+        </div>
+        <p class="body-lg reveal">A few things kept with care. Not to replay them, only to remember that they were real.</p>
+      </div>
+      <div class="archive-controls glass-card reveal">
+        <div class="archive-tabs" role="tablist" aria-label="Archive format">
+          <button class="active" role="tab" aria-selected="true" data-filter="all">All <small>12</small></button>
+          <button role="tab" aria-selected="false" data-filter="photo">Photos <small>06</small></button>
+          <button role="tab" aria-selected="false" data-filter="voice">Voice <small>03</small></button>
+          <button role="tab" aria-selected="false" data-filter="letter">Letters <small>03</small></button>
+        </div>
+        <label class="archive-search"><span>⌕</span><input type="search" placeholder="Search a memory" aria-label="Search the archive" data-archive-search /></label>
+        <button class="filter-button" type="button" data-year-toggle><span>2025—26</span><i>⌄</i></button>
+      </div>
+      <div class="archive-timeline reveal">
+        <span class="timeline-rule"></span><span>17 AUG 2025</span><span class="timeline-end">NOW</span>
+      </div>
+      <div class="archive-grid" data-archive-grid>
+        <article class="archive-card archive-card--image reveal-scale" data-type="photo" data-title="A familiar kind of rain" data-detail="A view through the glass, held for a little longer than necessary.">
+          <div class="archive-art image-window"></div><div class="archive-card-shade"></div>
+          <div class="archive-card-head"><span class="type-pill">Photo</span><span>17.08.25</span></div>
+          <div class="archive-card-foot"><h3>A familiar<br />kind of rain</h3><button class="round-arrow" aria-label="Open A familiar kind of rain">↗</button></div>
+        </article>
+        <article class="archive-card archive-card--letter reveal-scale delay-1" data-type="letter" data-title="The space after a sentence" data-detail="A line begun, then deliberately left unfinished.">
+          <div class="paper-grain"></div><div class="archive-card-head"><span class="type-pill">Letter</span><span>23.08.25</span></div>
+          <div class="letter-scribble" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="archive-card-foot"><h3>The space after<br />a sentence</h3><button class="round-arrow" aria-label="Open The space after a sentence">↗</button></div>
+        </article>
+        <article class="archive-card archive-card--voice reveal-scale delay-2" data-type="voice" data-title="Side B, 00:42" data-detail="A recording kept in its original silence.">
+          <div class="voice-circle"><i></i></div><div class="archive-card-head"><span class="type-pill">Voice</span><span>08.09.25</span></div>
+          <div class="voice-wave-mini" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="archive-card-foot"><h3>Side B<br />00:42</h3><button class="round-arrow" aria-label="Open Side B voice note">↗</button></div>
+        </article>
+        <article class="archive-card archive-card--wide reveal-scale" data-type="photo" data-title="Where the light landed" data-detail="The evening making a brief argument for staying.">
+          <div class="archive-art image-horizon"></div><div class="archive-card-shade"></div>
+          <div class="archive-card-head"><span class="type-pill">Photo</span><span>18.11.25</span></div>
+          <div class="archive-card-foot"><h3>Where the<br />light landed</h3><button class="round-arrow" aria-label="Open Where the light landed">↗</button></div>
+        </article>
+        <article class="archive-card archive-card--note reveal-scale delay-1" data-type="letter" data-title="A list of ordinary things" data-detail="Tea going cold. A route taken twice. The first clear morning after rain.">
+          <div class="note-dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="archive-card-head"><span class="type-pill">Note</span><span>01.01.26</span></div>
+          <div class="archive-card-foot"><h3>A list of<br />ordinary things</h3><button class="round-arrow" aria-label="Open A list of ordinary things">↗</button></div>
+        </article>
+        <article class="archive-card archive-card--sky reveal-scale delay-2" data-type="photo" data-title="Nothing had to happen" data-detail="The sky at the exact hour the noise stepped back.">
+          <div class="archive-art image-sky"></div><div class="archive-card-shade"></div>
+          <div class="archive-card-head"><span class="type-pill">Photo</span><span>22.04.26</span></div>
+          <div class="archive-card-foot"><h3>Nothing had<br />to happen</h3><button class="round-arrow" aria-label="Open Nothing had to happen">↗</button></div>
+        </article>
+      </div>
+      <button class="archive-more magnetic" type="button" data-load-more><span>See a few more</span><i>↓</i></button>
+    </section>
+
+    <section id="letter" class="chapter chapter-letter chapter-shell" data-section="letter">
+      <div class="side-index"><span>08</span><i></i><span>FOR WHAT COULD NOT BE MAILED</span></div>
+      <div class="letter-intro">
+        <span class="eyebrow reveal"><b></b> Chapter eight</span>
+        <h2 class="display-xl reveal">A Letter<br /><em>Never Sent</em></h2>
+      </div>
+      <article class="letter-paper reveal-scale">
+        <div class="letter-paper-top"><span>PRIVATE / UNADDRESSED</span><span>08—</span></div>
+        <div class="letter-copy">
+          <p>To the version of me<br />who was still waiting,</p>
+          <p>I do not need to correct the past to continue. I can let it be incomplete and still let it have taught me something.</p>
+          <p>There is a difference between carrying a memory and living inside it. I am learning the difference.</p>
+          <p>With patience,<br /><span>me, later</span></p>
+        </div>
+        <div class="letter-paper-bottom"><span>Read once. Keep gently.</span><button type="button" data-letter-toggle aria-pressed="false">Fold letter <i>⌃</i></button></div>
+      </article>
+      <p class="letter-caption reveal">Written for release,<br />not for a reply.</p>
+    </section>
+
+    <section id="numbers" class="chapter chapter-numbers chapter-shell" data-section="numbers">
+      <div class="side-index"><span>09</span><i></i><span>THE MATH OF A MOMENT</span></div>
+      <div class="numbers-heading">
+        <span class="eyebrow reveal"><b></b> Chapter nine</span>
+        <h2 class="display-xl reveal">The <em>Numbers</em></h2>
+        <p class="body-lg reveal">A time span is not a meaning. But sometimes it helps to see the distance that has been crossed.</p>
+      </div>
+      <div class="number-hero reveal-scale">
+        <span>Since 17 August 2025</span>
+        <strong data-time="totalDays">000</strong>
+        <p>whole days, each one an invitation to arrive again.</p>
+        <div class="number-hero-orbit" aria-hidden="true"><i></i><i></i><i></i></div>
+      </div>
+      <div class="numbers-grid" data-numbers-grid>
+        <article class="number-card glass-card reveal"><span>Years</span><strong data-time="years">00</strong><small>calendar turns</small></article>
+        <article class="number-card glass-card reveal delay-1"><span>Months</span><strong data-time="months">00</strong><small>small chapters</small></article>
+        <article class="number-card glass-card reveal delay-2"><span>Weeks</span><strong data-time="weeks">000</strong><small>weekly resets</small></article>
+        <article class="number-card glass-card reveal"><span>Days</span><strong data-time="days">000</strong><small>sunrises counted</small></article>
+        <article class="number-card glass-card reveal delay-1"><span>Hours</span><strong data-time="totalHours">00,000</strong><small>room to change</small></article>
+        <article class="number-card glass-card reveal delay-2"><span>Minutes</span><strong data-time="totalMinutes">000,000</strong><small>tiny openings</small></article>
+        <article class="number-card glass-card number-card--seconds reveal"><span>Seconds</span><strong data-time="totalSeconds">00,000,000</strong><small>and still unfolding</small><i class="seconds-dot"></i></article>
+      </div>
+    </section>
+
+    <section id="final" class="chapter chapter-final chapter-shell" data-section="final">
+      <div class="final-orbit" aria-hidden="true"><span></span></div>
+      <div class="final-content">
+        <span class="eyebrow eyebrow--center reveal"><b></b> The final page</span>
+        <h2 class="reveal">Some memories <em>stay.</em></h2>
+        <p class="reveal">Time moved forward. So did I.</p>
+        <a href="#home" class="return-top magnetic reveal"><span>Return to the beginning</span><i>↑</i></a>
+      </div>
+      <p class="final-coordinate reveal">35° 11' 38.3" N &nbsp; / &nbsp; 77° 04' 18.7" E</p>
+    </section>
+  </main>
+
+  <nav class="floating-dock glass-card" aria-label="Archive controls">
+    <a href="#home" class="dock-button active magnetic" aria-label="Home" data-dock="home"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10.5 12 4l8 6.5v8a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 18.5z"/><path d="M9.5 20v-5.5h5V20"/></svg><span>Home</span></a>
+    <a href="#between" class="dock-button magnetic" aria-label="Chapters" data-dock="between"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6.5A2.5 2.5 0 0 1 6.5 4H20v15.5A.5.5 0 0 1 19.5 20H6.5A2.5 2.5 0 0 1 4 17.5z"/><path d="M4 6.5A2.5 2.5 0 0 1 6.5 9H20M8 12h8M8 15h5"/></svg><span>Chapters</span></a>
+    <a href="#archive" class="dock-button magnetic" aria-label="Archive" data-dock="archive"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 7.5h17v12h-17zM5.5 4h13v3.5h-13zM8 11h8M8 15h5"/></svg><span>Archive</span></a>
+    <a href="#numbers" class="dock-button magnetic" aria-label="Numbers" data-dock="numbers"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5v5l3.3 2"/></svg><span>Time</span></a>
+    <button class="dock-button magnetic" type="button" aria-label="Open design system" data-system-open><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 1.6 4.7L18 9.3 13.6 11l-1.6 4.7-1.6-4.7L6 9.3l4.4-1.6zM18.2 15.5l.7 2.1 2.1.7-2.1.7-.7 2.1-.7-2.1-2.1-.7 2.1-.7z"/></svg><span>System</span></button>
+  </nav>
+
+  <section class="archive-modal" data-archive-modal role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
+    <button class="modal-backdrop" data-modal-close aria-label="Close archive item"></button>
+    <div class="modal-content glass-card">
+      <button class="modal-close" data-modal-close aria-label="Close">×</button>
+      <span class="eyebrow"><b></b> Archive item</span>
+      <span class="modal-index">07 / <span data-modal-type>Photo</span></span>
+      <h2 id="modal-title" data-modal-title>A familiar kind of rain</h2>
+      <p data-modal-detail>A view through the glass, held for a little longer than necessary.</p>
+      <div class="modal-rule"></div>
+      <span class="modal-stamp">Preserved with care / no revision</span>
+    </div>
+  </section>
+
+  <section class="system-modal" data-system-modal role="dialog" aria-modal="true" aria-labelledby="system-modal-title" hidden>
+    <button class="modal-backdrop" data-system-close aria-label="Close design system"></button>
+    <div class="system-sheet">
+      <header class="system-sheet-header"><div><span class="eyebrow"><b></b> Design language</span><h2 id="system-modal-title">The quiet system</h2></div><button data-system-close aria-label="Close design system">×</button></header>
+      <div class="system-scroll">
+        <section class="system-row"><div><span class="system-label">01 / Palette</span><p>Black, softened by light.</p></div><div class="swatches"><span style="--swatch:#000"><i>#000000</i></span><span style="--swatch:#0B0B0B"><i>#0B0B0B</i></span><span style="--swatch:rgba(255,255,255,.10)"><i>Glass 10%</i></span><span class="swatch-white" style="--swatch:#F6F5F2"><i>Ivory</i></span></div></section>
+        <section class="system-row"><div><span class="system-label">02 / Type</span><p>Editorial restraint, clear utility.</p></div><div class="type-samples"><strong>Some memories stay.</strong><span>NEUE HAAS / UI LABEL / 12PX</span><em>Quietly becoming</em></div></section>
+        <section class="system-row"><div><span class="system-label">03 / Spacing</span><p>Eight-point rhythm, generous breath.</p></div><div class="spacing-samples"><i style="--space:8px"></i><i style="--space:16px"></i><i style="--space:32px"></i><i style="--space:64px"></i><i style="--space:120px"></i></div></section>
+        <section class="system-row"><div><span class="system-label">04 / Components</span><p>One language, different temperatures.</p></div><div class="component-samples"><button class="sample-button">Continue <span>↗</span></button><div class="sample-pill">LIVE <i></i></div><div class="sample-card">A glass surface that knows<br />when to get out of the way.</div></div></section>
+        <section class="system-row system-responsive"><div><span class="system-label">05 / Responsive</span><p>Desktop has room to breathe. Mobile keeps the same thought, closer.</p></div><div class="device-frames"><div class="desktop-device"><i></i><span>12-column<br />fluid field</span></div><div class="mobile-device"><i></i><span>4-column<br />quiet stack</span></div></div></section>
+      </div>
+      <footer>SMS / 2025—26 <span>Designed to hold without holding on.</span></footer>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div><span class="footer-mark">SMS</span><p>An archive for reflection,<br />made with room to breathe.</p></div>
+    <div class="footer-links"><a href="#home">Beginning</a><a href="#archive">Archive</a><a href="design-system.html">Design system</a></div>
+    <span class="footer-right">© A QUIET PLACE IN TIME</span>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
