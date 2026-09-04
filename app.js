@@ -7,13 +7,21 @@
   const start = new Date('2025-08-17T11:09:00+05:30').getTime();
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Intro
-  window.addEventListener('load', () => {
-    window.setTimeout(() => {
-      document.body.classList.remove('is-loading');
-      $('#home')?.classList.add('hero-loaded');
-    }, 650);
-  });
+  // Intro — reveal quickly without waiting for every asset
+const revealIntro = () => {
+  document.body.classList.remove('is-loading');
+  $('#home')?.classList.add('hero-loaded');
+};
+
+// Don't wait for every image/font/resource.
+// The page can render while the remaining assets continue loading.
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => {
+    window.setTimeout(revealIntro, 180);
+  }, { once: true });
+} else {
+  window.setTimeout(revealIntro, 180);
+}
 
   // Time is intentionally live throughout the archive.
   const comma = new Intl.NumberFormat('en-US');
