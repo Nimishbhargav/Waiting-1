@@ -19,32 +19,67 @@
   const comma = new Intl.NumberFormat('en-US');
   const pad = (value, length = 2) => String(value).padStart(length, '0');
   function getTime() {
-    const ms = Math.max(0, Date.now() - start);
-    const seconds = Math.floor(ms / 1000);
-    const minutes = Math.floor(seconds / 60);
-    const hours = Math.floor(minutes / 60);
-    const days = Math.floor(hours / 24);
-    return {
-      ms,
-      seconds,
-      minutes,
-      hours,
-      days,
-      years: Math.floor(days / 365.2425),
-      months: Math.floor(days / 30.436875),
-      weeks: Math.floor(days / 7),
-      remainderHours: hours % 24,
-      remainderMinutes: minutes % 60,
-      remainderSeconds: seconds % 60
-    };
+  const now = new Date();
+  const ms = Math.max(0, now.getTime() - start);
+
+  const seconds = Math.floor(ms / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
+
+  const startDate = new Date(start);
+
+  /*
+   * LIVE CALENDAR MONTH CALCULATION
+   *
+   * 17 Aug 2025 11:09 AM
+   * → 17 Aug 2026 11:09 AM = 12 months
+   * → 17 Sep 2026 11:09 AM = 13 months
+   * → 17 Aug 2027 11:09 AM = 24 months
+   */
+
+  let totalMonths =
+    (now.getFullYear() - startDate.getFullYear()) * 12 +
+    (now.getMonth() - startDate.getMonth());
+
+  // Create the exact anniversary for the calculated month.
+  const anniversary = new Date(startDate);
+  anniversary.setMonth(startDate.getMonth() + totalMonths);
+
+  // If the anniversary hasn't happened yet this month,
+  // the current month isn't complete.
+  if (now < anniversary) {
+    totalMonths--;
+  }
+
+  totalMonths = Math.max(0, totalMonths);
+
+  return {
+    ms,
+    seconds,
+    minutes,
+    hours,
+    days,
+
+    // Live calendar values
+    years: Math.floor(totalMonths / 12),
+    months: totalMonths,
+
+    // Total elapsed weeks
+    weeks: Math.floor(days / 7),
+
+    // Remaining time for the hero timer
+    remainderHours: hours % 24,
+    remainderMinutes: minutes % 60,
+    remainderSeconds: seconds % 60
+  };
   }
 
   function updateTime() {
     const t = getTime();
     const values = {
       days: pad(t.days, 3),
-      hours: pad(t.remainderHours),
-      minutes: pad(t.remainderMinutes),
+      hours: pad(t.remainder      minutes: pad(t.remainderMinutes),
       seconds: pad(t.remainderSeconds),
       years: pad(t.years),
       months: pad(t.months),
