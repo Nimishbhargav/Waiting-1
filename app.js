@@ -1,82 +1,1016 @@
-/* Some Memories Stay — interaction layer */
+/*
+  SOME MEMORIES STAY — interaction layer
+  Live archive interaction system.
+*/
+
 (() => {
   'use strict';
 
-  const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
-  const $ = (selector, root = document) => root.querySelector(selector);
+  const $$ = (selector, root = document) =>
+    Array.from(root.querySelectorAll(selector));
+
+  const $ = (selector, root = document) =>
+    root.querySelector(selector);
+
+  // ------------------------------------------------------------
+  // CORE
+  // ------------------------------------------------------------
+
   const start = new Date('2025-08-17T11:09:00+05:30').getTime();
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Intro — reveal quickly without waiting for every asset
-const revealIntro = () => {
-  document.body.classList.remove('is-loading');
-  $('#home')?.classList.add('hero-loaded');
-};
+  const reduceMotion =
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-// Don't wait for every image/font/resource.
-// The page can render while the remaining assets continue loading.
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', () => {
-    window.setTimeout(revealIntro, 180);
-  }, { once: true });
-} else {
-  window.setTimeout(revealIntro, 180);
-}
+  const finePointer =
+    window.matchMedia('(pointer:fine)').matches;
 
-  // Time is intentionally live throughout the archive.
   const comma = new Intl.NumberFormat('en-US');
-  const pad = (value, length = 2) => String(value).padStart(length, '0');
-  function getTime() {
-  const now = new Date();
-  const ms = Math.max(0, now.getTime() - start);
 
-  const seconds = Math.floor(ms / 1000);
-  const minutes = Math.floor(seconds / 60);
-  const hours = Math.floor(minutes / 60);
-  const days = Math.floor(hours / 24);
+  const pad = (value, length = 2) =>
+    String(value).padStart(length, '0');
 
-  const startDate = new Date(start);
 
-  /*
-   * LIVE CALENDAR MONTH CALCULATION
-   *
-   * 17 Aug 2025 11:09 AM
-   * → 17 Aug 2026 11:09 AM = 12 months
-   * → 17 Sep 2026 11:09 AM = 13 months
-   * → 17 Aug 2027 11:09 AM = 24 months
-   */
+  // ------------------------------------------------------------
+  // INTRO / PRELOADER
+  // Faster reveal — does NOT wait for every image/font/resource.
+  // ------------------------------------------------------------
 
-  let totalMonths =
-    (now.getFullYear() - startDate.getFullYear()) * 12 +
-    (now.getMonth() - startDate.getMonth());
+  const revealIntro = () => {
+    document.body.classList.remove('is-loading');
+    $('#home')?.classList.add('hero-loaded');
+  };
 
-  // Create the exact anniversary for the calculated month.
-  const anniversary = new Date(startDate);
-  anniversary.setMonth(startDate.getMonth() + totalMonths);
-
-  // If the anniversary hasn't happened yet this month,
-  // the current month isn't complete.
-  if (now < anniversary) {
-    totalMonths--;
+  if (document.readyState === 'loading') {
+    document.addEventListener(
+      'DOMContentLoaded',
+      () => {
+        window.setTimeout(revealIntro, 180);
+      },
+      { once: true }
+    );
+  } else {
+    window.setTimeout(revealIntro, 180);
   }
 
-  totalMonths = Math.max(0, totalMonths);
 
-  return {
-    ms,
-    seconds,
-    minutes,
-    hours,
-    days,
+  // ------------------------------------------------------------
+  // LIVE LOVE CALCULATION
+  //
+  // Start:
+  // 17 Aug 2025 — 11:09 AM
+  //
+  // Months are LIVE CALENDAR MONTHS:
+  // 17 Aug 2026 11:09 AM = 12
+  // 17 Sep 2026 11:09 AM = 13
+  // 17 Aug 2027 11:09 AM = 24
+  // ------------------------------------------------------------
 
-    // Live calendar values
-    years: Math.floor(totalMonths / 12),
-    months: totalMonths,
+  function getTime() {
+    const now = new Date();
 
-    // Total elapsed weeks
-    weeks: Math.floor(days / 7),
+    const ms = Math.max(
+      0,
+      now.getTime() - start
+    );
 
-    // Remaining time for the hero timer
+    const seconds = Math.floor(ms / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+
+    const startDate = new Date(start);
+
+    let totalMonths =
+      (now.getFullYear() - startDate.getFullYear()) * 12 +
+      (now.getMonth() - startDate.getMonth());
+
+    // Exact monthly anniversary.
+    const anniversary = new Date(startDate);
+
+    anniversary.setMonth(
+      startDate.getMonth() + totalMonths
+    );
+
+    // If this month's anniversary hasn't happened yet,
+    // don't count that month.
+    if (now < anniversary) {
+      totalMonths--;
+    }
+
+    totalMonths = Math.max(
+      0,
+      totalMonths
+    );
+
+    return {
+      ms,
+      seconds,
+      minutes,
+      hours,
+      days,
+
+      // Total calendar months.
+      months: totalMonths,
+
+      // Complete years based on calendar months.
+      years: Math.floor(totalMonths / 12),
+
+      // Total complete weeks.
+      weeks: Math.floor(days / 7),
+
+      // Hero timer remainder.
+      remainderHours: hours % 24,
+      remainderMinutes: minutes % 60,
+      remainderSeconds: seconds % 60
+    };
+  }
+
+
+  // ------------------------------------------------------------
+  // UPDATE ALL TIME VALUES
+  // ------------------------------------------------------------
+
+  function updateTime() {
+    const t = getTime();
+
+    const values = {
+      days: pad(t.days, 3),
+
+      hours: pad(
+        t.remainderHours
+      ),
+
+      minutes: pad(
+        t.remainderMinutes
+      ),
+
+      seconds: pad(
+        t.remainderSeconds
+      ),
+
+      years: pad(
+        t.years
+      ),
+
+      months: pad(
+        t.months
+      ),
+
+      weeks: pad(
+        t.weeks,
+        3
+      ),
+
+      totalDays: comma.format(
+        t.days
+      ),
+
+      totalHours: comma.format(
+        t.hours
+      ),
+
+      totalMinutes: comma.format(
+        t.minutes
+      ),
+
+      totalSeconds: comma.format(
+        t.seconds
+      )
+    };
+
+    $$('[data-time]').forEach((node) => {
+      const key = node.dataset.time;
+
+      if (
+        Object.prototype.hasOwnProperty.call(
+          values,
+          key
+        )
+      ) {
+        node.textContent = values[key];
+      }
+    });
+
+    const apologyCounter = $('#sorry-count');
+
+    if (apologyCounter) {
+      apologyCounter.textContent =
+        comma.format(t.seconds);
+    }
+  }
+
+  updateTime();
+
+  window.setInterval(
+    updateTime,
+    1000
+  );
+
+
+  // ------------------------------------------------------------
+  // SCROLL PROGRESS + PARALLAX
+  // ------------------------------------------------------------
+
+  const progress =
+    $('.scroll-progress span');
+
+  const header =
+    $('[data-header]');
+
+  const parallaxItems =
+    $$('[data-parallax]');
+
+  let scrollRAF = 0;
+
+  function updateScroll() {
+    scrollRAF = 0;
+
+    const y =
+      window.scrollY ||
+      window.pageYOffset;
+
+    const doc =
+      document.documentElement;
+
+    const max = Math.max(
+      1,
+      doc.scrollHeight -
+      window.innerHeight
+    );
+
+    if (progress) {
+      progress.style.width =
+        `${(y / max) * 100}%`;
+    }
+
+    if (header) {
+      header.classList.toggle(
+        'is-scrolled',
+        y > 36
+      );
+    }
+
+    if (!reduceMotion) {
+      parallaxItems.forEach((item) => {
+        const speed =
+          Number(
+            item.dataset.parallax || 0
+          );
+
+        const rect =
+          item.getBoundingClientRect();
+
+        const centerOffset =
+          rect.top +
+          rect.height / 2 -
+          window.innerHeight / 2;
+
+        const translate =
+          Math.max(
+            -48,
+            Math.min(
+              48,
+              centerOffset * speed
+            )
+          );
+
+        item.style.transform =
+          `translate3d(0, ${translate}px, 0)`;
+      });
+    }
+  }
+
+  window.addEventListener(
+    'scroll',
+    () => {
+      if (!scrollRAF) {
+        scrollRAF =
+          requestAnimationFrame(
+            updateScroll
+          );
+      }
+    },
+    { passive: true }
+  );
+
+  updateScroll();
+
+
+  // ------------------------------------------------------------
+  // POINTER GLOW
+  // ------------------------------------------------------------
+
+  const cursorGlow =
+    $('.cursor-glow');
+
+  if (
+    !reduceMotion &&
+    finePointer &&
+    cursorGlow
+  ) {
+    window.addEventListener(
+      'pointermove',
+      (event) => {
+        cursorGlow.style.left =
+          `${event.clientX}px`;
+
+        cursorGlow.style.top =
+          `${event.clientY}px`;
+      },
+      { passive: true }
+    );
+
+    $$('.magnetic').forEach(
+      (element) => {
+
+        element.addEventListener(
+          'pointermove',
+          (event) => {
+            const rect =
+              element.getBoundingClientRect();
+
+            const x =
+              (event.clientX - rect.left) /
+              rect.width -
+              0.5;
+
+            const y =
+              (event.clientY - rect.top) /
+              rect.height -
+              0.5;
+
+            element.style.transform =
+              `translate(${x * 4}px, ${y * 4}px)`;
+          }
+        );
+
+        element.addEventListener(
+          'pointerleave',
+          () => {
+            element.style.transform = '';
+          }
+        );
+      }
+    );
+  }
+
+
+  // ------------------------------------------------------------
+  // REVEAL SECTIONS
+  // ------------------------------------------------------------
+
+  const revealItems =
+    $$('.reveal, .reveal-scale');
+
+  if (
+    'IntersectionObserver' in window &&
+    !reduceMotion
+  ) {
+    const revealObserver =
+      new IntersectionObserver(
+        (entries) => {
+
+          entries.forEach(
+            (entry) => {
+
+              if (
+                entry.isIntersecting
+              ) {
+                entry.target.classList.add(
+                  'is-visible'
+                );
+
+                revealObserver.unobserve(
+                  entry.target
+                );
+              }
+            }
+          );
+        },
+        {
+          rootMargin:
+            '0px 0px -9% 0px',
+          threshold: 0.08
+        }
+      );
+
+    revealItems.forEach(
+      (item) =>
+        revealObserver.observe(item)
+    );
+
+  } else {
+
+    revealItems.forEach(
+      (item) =>
+        item.classList.add(
+          'is-visible'
+        )
+    );
+  }
+
+
+  // ------------------------------------------------------------
+  // DOCK
+  // ------------------------------------------------------------
+
+  const dockButtons =
+    $$('[data-dock]');
+
+  const dockMap = {
+    home: 'home',
+
+    beginning: 'between',
+    between: 'between',
+    seconds: 'between',
+    'little-things': 'between',
+    unsaid: 'between',
+    distance: 'between',
+    lessons: 'between',
+
+    archive: 'archive',
+    letter: 'archive',
+
+    numbers: 'numbers',
+    final: 'numbers'
+  };
+
+  if (
+    'IntersectionObserver' in window
+  ) {
+    const chapterObserver =
+      new IntersectionObserver(
+        (entries) => {
+
+          entries
+            .filter(
+              (entry) =>
+                entry.isIntersecting
+            )
+            .forEach(
+              (entry) => {
+
+                const id =
+                  entry.target.id ||
+                  entry.target.dataset.section;
+
+                const active =
+                  dockMap[id];
+
+                if (!active) return;
+
+                dockButtons.forEach(
+                  (button) => {
+                    button.classList.toggle(
+                      'active',
+                      button.dataset.dock ===
+                      active
+                    );
+                  }
+                );
+              }
+            );
+        },
+        {
+          rootMargin:
+            '-42% 0px -47% 0px',
+          threshold: 0.01
+        }
+      );
+
+    $$('[data-section]').forEach(
+      (section) =>
+        chapterObserver.observe(
+          section
+        )
+    );
+  }
+
+
+  // ------------------------------------------------------------
+  // MOBILE MENU
+  // ------------------------------------------------------------
+
+  const menu =
+    $('[data-mobile-menu]');
+
+  const menuToggle =
+    $('[data-menu-toggle]');
+
+  const closeMenu = () => {
+
+    if (!menu) return;
+
+    menu.classList.remove(
+      'is-open'
+    );
+
+    menu.setAttribute(
+      'aria-hidden',
+      'true'
+    );
+
+    menuToggle?.setAttribute(
+      'aria-expanded',
+      'false'
+    );
+
+    document.body.classList.remove(
+      'is-menu-open'
+    );
+  };
+
+  const openMenu = () => {
+
+    if (!menu) return;
+
+    menu.classList.add(
+      'is-open'
+    );
+
+    menu.setAttribute(
+      'aria-hidden',
+      'false'
+    );
+
+    menuToggle?.setAttribute(
+      'aria-expanded',
+      'true'
+    );
+
+    document.body.classList.add(
+      'is-menu-open'
+    );
+  };
+
+  menuToggle?.addEventListener(
+    'click',
+    () => {
+      menu?.classList.contains(
+        'is-open'
+      )
+        ? closeMenu()
+        : openMenu();
+    }
+  );
+
+  $('[data-menu-close]')
+    ?.addEventListener(
+      'click',
+      closeMenu
+    );
+
+  $$('[data-mobile-menu] a')
+    .forEach(
+      (link) =>
+        link.addEventListener(
+          'click',
+          closeMenu
+        )
+    );
+
+
+  // ------------------------------------------------------------
+  // AMBIENT PLAYER
+  // ------------------------------------------------------------
+
+  const soundToggle =
+    $('[data-sound-toggle]');
+
+  const ambientPlayer =
+    $('[data-ambient-player]');
+
+  const closeAmbientPlayer = () => {
+
+    ambientPlayer?.classList.remove(
+      'is-open'
+    );
+
+    ambientPlayer?.setAttribute(
+      'aria-hidden',
+      'true'
+    );
+
+    soundToggle?.classList.remove(
+      'active'
+    );
+
+    soundToggle?.setAttribute(
+      'aria-pressed',
+      'false'
+    );
+
+    document.body.classList.remove(
+      'ambient-active'
+    );
+  };
+
+  soundToggle?.addEventListener(
+    'click',
+    () => {
+
+      const isActive =
+        !ambientPlayer?.classList.contains(
+          'is-open'
+        );
+
+      ambientPlayer?.classList.toggle(
+        'is-open',
+        isActive
+      );
+
+      ambientPlayer?.setAttribute(
+        'aria-hidden',
+        String(!isActive)
+      );
+
+      soundToggle.classList.toggle(
+        'active',
+        isActive
+      );
+
+      soundToggle.setAttribute(
+        'aria-pressed',
+        String(isActive)
+      );
+
+      document.body.classList.toggle(
+        'ambient-active',
+        isActive
+      );
+    }
+  );
+
+  $('[data-ambient-close]')
+    ?.addEventListener(
+      'click',
+      closeAmbientPlayer
+    );
+
+  $('[data-ambient-play]')
+    ?.addEventListener(
+      'click',
+      (event) => {
+
+        const paused =
+          ambientPlayer?.classList.toggle(
+            'is-paused'
+          );
+
+        event.currentTarget
+          .setAttribute(
+            'aria-pressed',
+            String(!paused)
+          );
+
+        event.currentTarget
+          .setAttribute(
+            'aria-label',
+            paused
+              ? 'Play ambient player'
+              : 'Pause ambient player'
+          );
+      }
+    );
+
+
+  // ------------------------------------------------------------
+  // VOICE NOTE VISUALIZER
+  // ------------------------------------------------------------
+
+  $$('[data-voice-note] .voice-play')
+    .forEach(
+      (button) => {
+
+        button.addEventListener(
+          'click',
+          () => {
+
+            const parent =
+              button.closest(
+                '[data-voice-note]'
+              );
+
+            const playing =
+              parent?.classList.toggle(
+                'is-playing'
+              );
+
+            button.setAttribute(
+              'aria-pressed',
+              String(Boolean(playing))
+            );
+
+            button.setAttribute(
+              'aria-label',
+              playing
+                ? 'Pause visual voice note'
+                : 'Play visual voice note'
+            );
+          }
+        );
+      }
+    );
+
+
+  // ------------------------------------------------------------
+  // ARCHIVE FILTERS
+  // ------------------------------------------------------------
+
+  const archiveTabs =
+    $$('[data-filter]');
+
+  const archiveGrid =
+    $('[data-archive-grid]');
+
+  const archiveSearch =
+    $('[data-archive-search]');
+
+  let activeFilter = 'all';
+
+  function applyArchiveFilters() {
+
+    const query =
+      (
+        archiveSearch?.value ||
+        ''
+      )
+        .trim()
+        .toLowerCase();
+
+    $$('.archive-card', archiveGrid)
+      .forEach(
+        (card) => {
+
+          const typeMatch =
+            activeFilter === 'all' ||
+            card.dataset.type ===
+            activeFilter;
+
+          const phrase =
+            `${card.dataset.title || ''} ${card.dataset.detail || ''}`
+              .toLowerCase();
+
+          card.hidden =
+            !typeMatch ||
+            Boolean(
+              query &&
+              !phrase.includes(query)
+            );
+        }
+      );
+  }
+
+  archiveTabs.forEach(
+    (tab) => {
+
+      tab.addEventListener(
+        'click',
+        () => {
+
+          activeFilter =
+            tab.dataset.filter ||
+            'all';
+
+          archiveTabs.forEach(
+            (button) => {
+
+              const selected =
+                button === tab;
+
+              button.classList.toggle(
+                'active',
+                selected
+              );
+
+              button.setAttribute(
+                'aria-selected',
+                String(selected)
+              );
+            }
+          );
+
+          applyArchiveFilters();
+        }
+      );
+    }
+  );
+
+  archiveSearch?.addEventListener(
+    'input',
+    applyArchiveFilters
+  );
+
+
+  // ------------------------------------------------------------
+  // YEAR TOGGLE
+  // ------------------------------------------------------------
+
+  $('[data-year-toggle]')
+    ?.addEventListener(
+      'click',
+      (event) => {
+
+        const label =
+          $('span', event.currentTarget);
+
+        if (!label) return;
+
+        const allTime =
+          label.textContent ===
+          'All time';
+
+        label.textContent =
+          allTime
+            ? '2025—26'
+            : 'All time';
+
+        event.currentTarget
+          .classList.toggle(
+            'is-active',
+            !allTime
+          );
+      }
+    );
+
+
+  // ------------------------------------------------------------
+  // LOAD MORE ARCHIVE ITEMS
+  // ------------------------------------------------------------
+
+  const moreItems = [
+    {
+      type: 'voice',
+      className:
+        'archive-card--voice',
+      title:
+        'The room tone',
+      detail:
+        'Twenty seconds where even the air seemed to be listening.',
+      date:
+        '29.05.26',
+      inner:
+        '<div class="voice-circle"><i></i></div>' +
+        '<div class="voice-wave-mini" aria-hidden="true">' +
+        '<i></i><i></i><i></i><i></i><i></i>' +
+        '<i></i><i></i><i></i><i></i><i></i>' +
+        '</div>'
+    },
+
+    {
+      type: 'letter',
+      className:
+        'archive-card--letter',
+      title:
+        'No conclusion required',
+      detail:
+        'A reminder that not every chapter needs a final line.',
+      date:
+        '16.06.26',
+      inner:
+        '<div class="paper-grain"></div>' +
+        '<div class="letter-scribble" aria-hidden="true">' +
+        '<i></i><i></i><i></i><i></i><i></i>' +
+        '</div>'
+    },
+
+    {
+      type: 'photo',
+      className:
+        'archive-card--sky',
+      title:
+        'A little more sky',
+      detail:
+        'A single clear night saved without needing a reason.',
+      date:
+        '03.07.26',
+      inner:
+        '<div class="archive-art image-sky"></div>' +
+        '<div class="archive-card-shade"></div>'
+    }
+  ];
+
+  $('[data-load-more]')
+    ?.addEventListener(
+      'click',
+      (event) => {
+
+        const button =
+          event.currentTarget;
+
+        if (
+          !archiveGrid ||
+          button.dataset.loaded
+        ) {
+          return;
+        }
+
+        const fragment =
+          document.createDocumentFragment();
+
+        moreItems.forEach(
+          (item, index) => {
+
+            const card =
+              document.createElement(
+                'article'
+              );
+
+            card.className =
+              `archive-card ${item.className} is-visible`;
+
+            card.dataset.type =
+              item.type;
+
+            card.dataset.title =
+              item.title;
+
+            card.dataset.detail =
+              item.detail;
+
+            card.innerHTML =
+              `${item.inner}` +
+              `<div class="archive-card-head">` +
+              `<span class="type-pill">${item.type}</span>` +
+              `<span>${item.date}</span>` +
+              `</div>` +
+              `<div class="archive-card-foot">` +
+              `<h3>${item.title.replace(
+                ' ',
+                '<br />'
+              )}</h3>` +
+              `<button class="round-arrow" aria-label="Open ${item.title}">↗</button>` +
+              `</div>`;
+
+            card.style.transitionDelay =
+              `${index * 80}ms`;
+
+            fragment.appendChild(
+              card
+            );
+          }
+        );
+
+        archiveGrid.appendChild(
+          fragment
+        );
+
+        button.dataset.loaded =
+          'true';
+
+        const span =
+          button.querySelector(
+            'span'
+          );
+
+        const icon =
+          button.querySelector(
+            'i'
+          );
+
+        if (span) {
+          span.textContent =
+            'Archive complete';
+        }
+
+        if (icon) {
+          icon.textContent =
+            '—';
+        }
+
+        setTimeout(
+          applyArchiveFilters,
+          40
+        );
+      }
+    );
+
+
+  // ------------------------------------------------------------
+  // ARCHIVE MODAL
+  // ------------------------------------------------------------
+
+  const archiveModal =
+    $('[data-archive-modal]');
+
+  const openArchiveItem = (
+    card
+  ) => {
+
+    if (
+      !archiveModal ||
+      !card
+    ) {
+      return;
+    }
+
+    const title =
+      $('[data-modal-title]', archiveModal);
+
+    const detail =
+      $('[data-modal-detail]', archiveModal);
+
+    const type =
     remainderHours: hours % 24,
     remainderMinutes: minutes % 60,
     remainderSeconds: seconds % 60
